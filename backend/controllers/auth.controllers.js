@@ -10,7 +10,7 @@ export const login = async (req, res) => {
       return res.status(401).json({ error: "Credentials are blank." });
     }
 
-    const user = await User.findOne({ username });
+    const user = await User.findOne({username});
 
     if (!user) return res.status(401).send("User does not exists.")
     const isPasswordCorrect = await bcryptjs.compare(password, user.password || "");
@@ -22,6 +22,7 @@ export const login = async (req, res) => {
     generateTokenAndSetCookie(user._id, res);
 
     return res.status(200).json({
+      _id : user._id,
       fullName: user.fullName,
       username: user.username,
       profilePic: user.profilePic,

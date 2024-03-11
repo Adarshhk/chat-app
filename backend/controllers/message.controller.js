@@ -36,7 +36,7 @@ export const sendMessage = async (req , res) => {
 
         await Promise.all([newMessage.save() , convo.save()]);
 
-        return res.status(200).json({success : "Message sent successfully."})
+        return res.status(200).json(newMessage)
         
     } catch (error) {
         console.log("Error in sendMessage controller." , error.message)
@@ -53,6 +53,8 @@ export const getMessage = async (req , res) => {
         const conversation = await Conversation.findOne({
             participants : {$all : [chatterId , userId]}
         }).populate("messages")
+        
+        if (!conversation) return res.status(200).json([]);
 
         return res.status(200).send(conversation.messages);
         
