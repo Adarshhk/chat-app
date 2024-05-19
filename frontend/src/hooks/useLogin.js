@@ -43,12 +43,14 @@ const handleInputError = (username , password) => {
     if(!username || !password )
     {
         toast.error("Please enter all fields.")
+        setLoading(false)
         return false;
     }
 
     if(password.length < 6)
     {
         toast.error('Password length must atleast be 6 characters.');
+        setLoading(false)
         return false;
     }
 
