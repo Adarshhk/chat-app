@@ -12,7 +12,7 @@ export const login = async (req, res) => {
 
     const user = await User.findOne({username});
 
-    if (!user) return res.status(401).send("User does not exists.")
+    if (!user) return res.status(401).json({error : "User does not exists." })
     const isPasswordCorrect = await bcryptjs.compare(password, user.password || "");
 
     if (!isPasswordCorrect) {
@@ -30,7 +30,7 @@ export const login = async (req, res) => {
 
   } catch (error) {
     console.log("Error in login controller", error.message);
-    res.status(500).send({ error: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
@@ -41,7 +41,7 @@ export const logout = (req, res) => {
     return res.status(201).json({success : "Logged out successfully."})
   } catch (error) {
     console.log("Error in logout controller", error.message);
-    res.status(500).send({ error: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 
 }
@@ -93,6 +93,6 @@ export const signup = async (req, res) => {
 
   } catch (error) {
     console.log("Error in signup controller", error.message);
-    res.status(500).send({ error: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 }
